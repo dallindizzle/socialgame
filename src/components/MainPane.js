@@ -1,17 +1,17 @@
-import React, { useCallback, useState } from "react";
-import styled, { css } from "styled-components";
-import useSound from "use-sound";
+import React, { useCallback, useState } from 'react';
+import styled, { css } from 'styled-components';
+import useSound from 'use-sound';
 
-import { words } from "../resources/words.json";
-import Lightning from "./Lightning";
-import Timer from "./Timer";
-import { saveSpot, getSpot } from "../utils/saveSpot";
-import horn from "../resources/mlg-airhorn.mp3";
+import { words } from '../resources/words.json';
+import Lightning from './Lightning';
+import Timer from './Timer';
+import { saveSpot, getSpot } from '../utils/saveSpot';
+import horn from '../resources/mlg-airhorn.mp3';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  
+
   min-height: 100vh;
   height: 100%;
 
@@ -19,10 +19,12 @@ const Container = styled.div`
   align-items: center;
 
   ${(props) => {
-    if (props.timesUp)
+    if (props.timesUp) {
       return css`
         background-color: red;
       `;
+    }
+    return '';
   }}
 `;
 
@@ -43,7 +45,7 @@ const ModeButton = styled.div`
   width: 200px;
   margin: 20px 20px 20px 20px;
 
-  background-color: ${(props) => (props.isActive ? "#035773" : "#008cba")};
+  background-color: ${(props) => (props.isActive ? '#035773' : '#008cba')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,13 +86,13 @@ const WordArea = styled.div`
 `;
 
 const WordAreaContainer = styled.div`
-  visibility: ${(props) => (props.isActive ? "visible" : "hidden")};
+  visibility: ${(props) => (props.isActive ? 'visible' : 'hidden')};
 `;
 
 const MODES = {
-  MATCH: "match",
-  UNIQUE: "unique",
-  LIGHTNING: "lightning",
+  MATCH: 'match',
+  UNIQUE: 'unique',
+  LIGHTNING: 'lightning',
 };
 
 const MainPane = () => {
@@ -106,14 +108,13 @@ const MainPane = () => {
     if (!localSpot) {
       saveSpot(0);
       return 0;
-    } else {
-      return localSpot;
     }
+    return localSpot;
   });
 
   const getWords = useCallback((index, amount = 1) => {
     const currentWords = words.slice(index, index + amount);
-    //setSpot(index + amount);
+    setSpot(index + amount);
     return currentWords.length > 1 ? currentWords : currentWords[0];
   }, []);
 
@@ -131,9 +132,9 @@ const MainPane = () => {
     // eslint-disable-next-line
   }, [getWords, mode]);
 
-  const setActiveMode = useCallback((mode) => {
+  const setActiveMode = useCallback((modeToSet) => {
     setTimesUp(false);
-    setMode(mode);
+    setMode(modeToSet);
     setTimerActive(false);
     setTimeLeft(60);
   }, []);
